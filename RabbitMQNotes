@@ -1,0 +1,33 @@
+RabbitMQ
+
+install erlang
+sudo gdebi esl-erlang_19.3-1-ubuntu-xenial_amd64.deb 
+
+install rabbitmq
+sudo gdebi rabbitmq-server_3.6.10-1_all.deb
+
+sudo service rabbitmq-server start
+
+sudo service rabbitmq-server stop
+
+sudo rabbitmqctl status
+
+
+sudo rabbitmq-plugins enable rabbitmq_management
+http://localhost:5672
+
+Work queue with acknowledged messages are possible
+https://www.rabbitmq.com/tutorials/tutorial-two-java.html
+
+
+declaring que as durable makes the queue available even after restart
+Message can be made persistent by setting in MessageProperties.PERSISTENT_TEXT_PLAIN basicPublish method
+
+basicQos method with the prefetchCount = 1  ensure that the dipatch of a message happens onnly after acknoweldgement of a message
+
+Channel ->Que 
+
+RabbitMQ supports the following exchange types
+1. direct with or without routing key
+2. fanout
+3. topic
