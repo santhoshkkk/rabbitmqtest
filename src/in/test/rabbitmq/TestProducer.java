@@ -9,7 +9,7 @@ import com.rabbitmq.client.ConnectionFactory;
 
 public class TestProducer {
 
-	private static final String Q_NAME = "first";
+	private static final String Q_NAME = "new";
 
 	public static void main(String[] args) throws IOException, TimeoutException {
 		ConnectionFactory cfac = new ConnectionFactory();
@@ -17,12 +17,18 @@ public class TestProducer {
 		Connection conn = cfac.newConnection();
 		Channel channel = conn.createChannel();
 
-		channel.queueDeclare(Q_NAME, false, false, false, null);
-		String message = "Hello world";
+		channel.queueDeclare(Q_NAME, true, false, false, null);
+		String message = "message1";
 		channel.basicPublish("", Q_NAME, null, message.getBytes());
 		System.out.println("sent " + message);
-		
-		channel.close();
+
+		Channel channel2 = conn.createChannel();
+		//channel2.queueDeclarePassive(Q_NAME);
+		channel2.queueDeclare(Q_NAME, true, false, false, null);
+		String message2 = "message2";
+		channel2.basicPublish("", Q_NAME, null, message.getBytes());
+		System.out.println("sent " + message2);
+
 		conn.close();
 	}
 
